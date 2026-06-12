@@ -1,0 +1,1241 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "bad49dca-a3ef-4eba-aa4a-d1cb6507862a",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/12zvK-hd0iFG8-7gR4vRqVUIP5YhiNoI9LxSJGu9XEgE/edit?gid=1676415411#gid=1676415411",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1676415411,
+          "mode": "list",
+          "cachedResultName": "regenerate the decision column ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12zvK-hd0iFG8-7gR4vRqVUIP5YhiNoI9LxSJGu9XEgE/edit#gid=1676415411"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2870f91b-6324-478b-92d7-b771264134c7",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AcRMt6cZYHAbm0Xs",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "05146663-81af-4540-b033-355ffeac3b0c",
+              "leftValue": "={{$json.Annual_Income_USD}}",
+              "rightValue": 80000,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "f29e2a6f-d7f7-47d4-96f9-cbfb8607a510",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "vsahi950@gmail.com",
+        "subject": "Reject Application",
+        "message": "Income is Low",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        560,
+        112
+      ],
+      "id": "6de0518c-d5f7-465f-97a3-64f528759e1f",
+      "name": "Send a message",
+      "webhookId": "5a36aa3b-02a3-4dc9-9dd9-b28ce9cb0aad",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "NOgECf13OLKUa2za",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "84e5c5d8-e1b3-4436-935b-7b5d786ba24f",
+              "leftValue": "={{$json.Credit_Score}}",
+              "rightValue": 680,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "92f8d9ff-9a1b-466e-a65d-6049377d672b",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "vsahi950@gmail.com",
+        "subject": "Reject Application",
+        "message": "Low Credit Score",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        0
+      ],
+      "id": "c8cd1b64-3623-4c79-bddf-4091dc6a4abf",
+      "name": "Send a message1",
+      "webhookId": "de3afde4-54f9-41d8-afca-fc03ce6a04e2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "NOgECf13OLKUa2za",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ed0a739-eac7-4c94-9145-f562cd35651a",
+              "leftValue": "={{ $('Get row(s) in sheet').item.json.Debt_To_Income_Ratio }}",
+              "rightValue": 0.4,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        832,
+        -176
+      ],
+      "id": "bb673743-05f4-499f-ba1a-993d5b05a373",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3d45b847-3ccb-46c0-a98a-35a8928c3f97",
+              "leftValue": "={{ $json.Watchlist_Match_Pct }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1040,
+        -272
+      ],
+      "id": "e6753827-1505-4b40-9d41-9ae0ad57cffd",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "sendTo": "vsahi950@gmail.com",
+        "subject": "Loan Approved",
+        "message": "Congratulation! Your Loan application has been approved",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1248,
+        -272
+      ],
+      "id": "9e1ad517-fa64-4dfa-a96f-26f6a6ae8510",
+      "name": "Send a message2",
+      "webhookId": "f3426012-8191-4680-bbd0-9a59d307ca5e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "NOgECf13OLKUa2za",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "vsahi950@gmail.com",
+        "subject": "Review Application",
+        "message": "Compliance Check is Required",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1184,
+        -96
+      ],
+      "id": "1d59de2f-4aa6-4e77-ad10-2fe4fd0abce4",
+      "name": "Send a message3",
+      "webhookId": "9cc4efae-8bb3-431d-9b71-a336cff3c0cf",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "NOgECf13OLKUa2za",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit?gid=1676415411#gid=1676415411",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1676415411,
+          "mode": "list",
+          "cachedResultName": "regenerate the decision column ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit#gid=1676415411"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Application_ID": "={{ $('Get row(s) in sheet').item.json.Application_ID }}",
+            "Status": "Rejected",
+            "Risk_Level": "High Risk",
+            "Decision": "Rejected",
+            "Processed_Date": "Current Date",
+            "Reamrks": "Low Income"
+          },
+          "matchingColumns": [
+            "Application_ID"
+          ],
+          "schema": [
+            {
+              "id": "Application_ID",
+              "displayName": "Application_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Applicant_Name",
+              "displayName": "Applicant_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Annual_Income_USD",
+              "displayName": "Annual_Income_USD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Loan_Amount_Requested",
+              "displayName": "Loan_Amount_Requested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Credit_Score",
+              "displayName": "Credit_Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt_To_Income_Ratio",
+              "displayName": "Debt_To_Income_Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Watchlist_Match_Pct",
+              "displayName": "Watchlist_Match_Pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "System_Initial_Action",
+              "displayName": "System_Initial_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Max_Allowable_EMI",
+              "displayName": "Max_Allowable_EMI",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision_Primary_Basis",
+              "displayName": "Decision_Primary_Basis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk_Level",
+              "displayName": "Risk_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Date",
+              "displayName": "Processed_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reamrks",
+              "displayName": "Reamrks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        160
+      ],
+      "id": "87274c70-cd72-4a2d-880c-2467738441e7",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AcRMt6cZYHAbm0Xs",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit?gid=1676415411#gid=1676415411",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1676415411,
+          "mode": "list",
+          "cachedResultName": "regenerate the decision column ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit#gid=1676415411"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Application_ID": "={{ $('Get row(s) in sheet').item.json.Application_ID }}",
+            "Status": "Rejected",
+            "Risk_Level": "High Risk",
+            "Decision": "Rejected",
+            "Processed_Date": "Current Date",
+            "Reamrks": "Low Credit Score"
+          },
+          "matchingColumns": [
+            "Application_ID"
+          ],
+          "schema": [
+            {
+              "id": "Application_ID",
+              "displayName": "Application_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Applicant_Name",
+              "displayName": "Applicant_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Annual_Income_USD",
+              "displayName": "Annual_Income_USD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Loan_Amount_Requested",
+              "displayName": "Loan_Amount_Requested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Credit_Score",
+              "displayName": "Credit_Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt_To_Income_Ratio",
+              "displayName": "Debt_To_Income_Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Watchlist_Match_Pct",
+              "displayName": "Watchlist_Match_Pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "System_Initial_Action",
+              "displayName": "System_Initial_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Max_Allowable_EMI",
+              "displayName": "Max_Allowable_EMI",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision_Primary_Basis",
+              "displayName": "Decision_Primary_Basis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk_Level",
+              "displayName": "Risk_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Date",
+              "displayName": "Processed_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reamrks",
+              "displayName": "Reamrks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        32
+      ],
+      "id": "b2691c7d-a6fc-471f-a25d-32f5c79c3292",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AcRMt6cZYHAbm0Xs",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit?gid=1676415411#gid=1676415411",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1676415411,
+          "mode": "list",
+          "cachedResultName": "regenerate the decision column ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit#gid=1676415411"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Application_ID": "={{ $('Get row(s) in sheet').item.json.Application_ID }}",
+            "Status": "Under Review",
+            "Risk_Level": "Medium Risk",
+            "Decision": "Review",
+            "Processed_Date": "Current Date",
+            "Reamrks": "Additional Verification Required"
+          },
+          "matchingColumns": [
+            "Application_ID"
+          ],
+          "schema": [
+            {
+              "id": "Application_ID",
+              "displayName": "Application_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Applicant_Name",
+              "displayName": "Applicant_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Annual_Income_USD",
+              "displayName": "Annual_Income_USD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Loan_Amount_Requested",
+              "displayName": "Loan_Amount_Requested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Credit_Score",
+              "displayName": "Credit_Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt_To_Income_Ratio",
+              "displayName": "Debt_To_Income_Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Watchlist_Match_Pct",
+              "displayName": "Watchlist_Match_Pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "System_Initial_Action",
+              "displayName": "System_Initial_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Max_Allowable_EMI",
+              "displayName": "Max_Allowable_EMI",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision_Primary_Basis",
+              "displayName": "Decision_Primary_Basis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk_Level",
+              "displayName": "Risk_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Date",
+              "displayName": "Processed_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reamrks",
+              "displayName": "Reamrks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1392,
+        -96
+      ],
+      "id": "16106179-0c32-408f-b150-d8c9e54c0dd2",
+      "name": "Update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AcRMt6cZYHAbm0Xs",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit?gid=1676415411#gid=1676415411",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1676415411,
+          "mode": "list",
+          "cachedResultName": "regenerate the decision column ",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MubPaJISYHOm0dv8H5ii-Y4qndj8HSs4CbzntgMfT6g/edit#gid=1676415411"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Application_ID": "={{ $('Get row(s) in sheet').item.json.Application_ID }}",
+            "Status": "Approved",
+            "Risk_Level": "Low Risk",
+            "Decision": "Approved",
+            "Processed_Date": "Current Date",
+            "Reamrks": "Meeting all eligibility criteria"
+          },
+          "matchingColumns": [
+            "Application_ID"
+          ],
+          "schema": [
+            {
+              "id": "Application_ID",
+              "displayName": "Application_ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Applicant_Name",
+              "displayName": "Applicant_Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Annual_Income_USD",
+              "displayName": "Annual_Income_USD",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Loan_Amount_Requested",
+              "displayName": "Loan_Amount_Requested",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Credit_Score",
+              "displayName": "Credit_Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt_To_Income_Ratio",
+              "displayName": "Debt_To_Income_Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Watchlist_Match_Pct",
+              "displayName": "Watchlist_Match_Pct",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "System_Initial_Action",
+              "displayName": "System_Initial_Action",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Max_Allowable_EMI",
+              "displayName": "Max_Allowable_EMI",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision_Primary_Basis",
+              "displayName": "Decision_Primary_Basis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk_Level",
+              "displayName": "Risk_Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Processed_Date",
+              "displayName": "Processed_Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Reamrks",
+              "displayName": "Reamrks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1456,
+        -272
+      ],
+      "id": "9096cf75-8f4b-47ab-82e2-e46612d0bb5e",
+      "name": "Update row in sheet3",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AcRMt6cZYHAbm0Xs",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message2": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "cfada461-ebf0-4aac-a3b0-6b31714e12f3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4711e1a04b7260f5c298bb8437420769ca616e92bd65e50d74340f3e8c970bd4"
+  },
+  "id": "dvsQEdS9C3zNYocs",
+  "tags": []
+}
